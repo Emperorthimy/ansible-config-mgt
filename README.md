@@ -1,2 +1,2 @@
 # ansible-config-mgt
-Automate project 7 -10 using ansible
+Automate tooling project 7 -10 using ansible
