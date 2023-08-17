@@ -1,0 +1,28 @@
+---
+- name: Change timezone
+  hosts: all
+
+  tasks:
+    - name: Set timezone for Red Hat
+      block:
+        - name: Check if Red Hat
+          command: cat /etc/redhat-release
+          register: redhat_release
+          changed_when: false
+          failed_when: false
+
+        - name: Set timezone for Red Hat
+          command: timedatectl set-timezone Europe/London
+          when: redhat_release.stdout | search('Red Hat')
+
+    - name: Set timezone for Ubuntu
+      block:
+        - name: Check if Ubuntu
+          command: cat /etc/os-release
+          register: os_release
+          changed_when: false
+          failed_when: false
+
+        - name: Set timezone for Ubuntu
+          command: timedatectl set-timezone Europe/London
+          when: os_release.stdout | search('Ubuntu')
